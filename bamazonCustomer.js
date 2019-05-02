@@ -87,4 +87,5 @@ function updateStock(res, answer) {
             start();
         }
     )
-}
+}   
+
