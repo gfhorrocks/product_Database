@@ -121,38 +121,14 @@ function addInventory() {
     ])
         .then(function (answer) {
 
-            connection.query("update products set stock_quantity = stock_quantity + ? where item_id = 1", answer.quantity, function(err){
+            connection.query("update products set stock_quantity = stock_quantity + ? where item_id = ?", [answer.quantity, answer.item], function(err){
 
                 if(err) throw err;
 
                 console.log("Product Stock Updated.");
+
+                start();
             })
-
-
-            // connection.query("SELECT stock_quantity FROM products WHERE ?",{item_id: answer.item},function(err,res){
-
-            //     if(err) throw err;
-
-            //     originalInventory = res[0].stock_quantity;
-
-            //     newInventory = originalInventory+parseInt(answer.quantity);
-                
-            //     console.log(newInventory);
-            // })
-
-            // connection.query("UPDATE products SET ? WHERE ?",
-            //     [
-            //         {
-            //             stock_quantity: newInventory
-            //         },
-            //         {
-            //             item_id: answer.item
-            //         }
-            //     ],
-            //     function (err) {
-            //         if (err) throw err;
-            //         console.log("Product Updated!");
-            //     })
         })
 }
 
