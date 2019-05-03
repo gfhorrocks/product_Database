@@ -104,9 +104,6 @@ function viewLowInventory() {
 
 function addInventory() {
 
-    var originalInventory;
-    var newInventory;
-
     inquirer.prompt([
         {
             name: "item",
@@ -133,6 +130,44 @@ function addInventory() {
 }
 
 function addProduct() {
+    
+    inquirer.prompt([
+        {
+            name: "description",
+            type: "input",
+            message: "New product description: "
+        },
+        {
+            name: "department",
+            type: "input",
+            message: "New product department: "
+        },
+        {
+            name: "price",
+            type: "input",
+            message: "New product price: "
+        },
+        {
+            name: "quantity",
+            type: "input",
+            message: "New product stock: "
+        }
+    ]).then(function(answer){
 
-    start();
+        connection.query(
+            "INSERT INTO products SET ?",
+            {
+              product_name: answer.description,     //Sets product name
+              department_name: answer.department,   //Sets department
+              price: answer.price,                  //Sets price
+              stock_quantity: answer.quantity       //Sets stock quantity
+            },
+            function(err) {
+              if (err) throw err;
+              console.log("New Product added successfully!");
+              // Logs new product added successfully 
+              start();  //returns back to the main menu
+            }
+          );
+    })
 }
